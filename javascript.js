@@ -14,19 +14,20 @@ function divide(a,b) {
     return a / b;
 }
 
-let firstNum, secondNum = null, operator;
+let firstNum = 0, secondNum = null, operator;
 let input = document.querySelector('.input');
 let prev = document.querySelector('.prev');
 let dot = document.getElementById('decimal')
+input.textContent = 0;
 
 let del = document.querySelectorAll('.cl');
 del.forEach(btn => {
     btn.addEventListener('click', () => {
         if (btn.id === 'clear') {
-            firstNum = null;
+            firstNum = 0;
             secondNum = null;
             operator = null;
-            input.textContent = '';
+            input.textContent = '0';
             prev.textContent = '';
         }
         else {
@@ -48,6 +49,10 @@ function operate(firstNum, operator, secondNum) {
 let num = document.querySelectorAll('.num');
 num.forEach(btn => {
     btn.addEventListener('click', () => {
+        if (input.textContent === '0') {
+            input.textContent = '';
+            firstNum = null;
+        }
         if (input.textContent.includes('.')) {
             if (btn.id ==='decimal') return;
         }
@@ -65,6 +70,9 @@ num.forEach(btn => {
 let action = document.querySelectorAll('.operator') 
 action.forEach(btn => {
     btn.addEventListener('click', () => {
+        if (secondNum === null) {
+            if (btn.id ==='equal') return;
+        }
         if (btn.id === 'equal' || secondNum !== null) {
             if (/^\d+$/.test(firstNum)) firstNum = parseInt(firstNum);
             else firstNum = parseFloat(firstNum);
